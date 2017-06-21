@@ -9,7 +9,6 @@ from django.views.generic import FormView, CreateView
 from . import forms
 
 
-
 def dashboard(request):
     return render(request, 'users/dashboard.html')
 
