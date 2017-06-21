@@ -5,6 +5,7 @@ Django==1.11
 django-bootstrap3==8.2.3
 django-haystack==2.4.0
 django-taggit==0.22.1
+django-braces
 dnspython==1.15.0
 et-xmlfile==1.0.1
 exchangelib==1.9.2
