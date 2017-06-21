@@ -4,13 +4,14 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.urlresolvers import reverse, reverse_lazy
 from django.http import HttpResponseRedirect
 from django.views import generic
+from django.contrib.auth.models import User
 
 from braces.views import SelectRelatedMixin
 
 from . import forms
 
 class Dashboard(LoginRequiredMixin, SelectRelatedMixin, generic.DetailView):
-    #model = User
+    model = User
     select_related = ('thoughts',)
     template_name = 'users/dashboard.html'
 
