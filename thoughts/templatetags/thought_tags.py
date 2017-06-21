@@ -21,11 +21,13 @@ def thought_form():
 def chart_data(context):
     user = context['user']
     ten_days_ago = timezone.now() - datetime.timedelta(days=10)
-    thoughts = user.thoughts.filter(recorded_at__gte=ten_days_ago)
+    # Change the way the graph is ordered
+    thoughts = user.thoughts.filter(recorded_at__gte=ten_days_ago).order_by('recorded_at')
     return json.dumps({
         'labels' : [thought.recorded_at.strftime('%Y-%m-%d') for
                     thought in thoughts],
-        'series' : [[thought.condition for thought in thoughts]]
+        # Invert chart with *-1
+        'series' : [[thought.condition*-1 for thought in thoughts]]
     })
 
 
