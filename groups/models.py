@@ -2,22 +2,26 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.utils import timezone
 
+from autoslug import AutoSlugField
+
 
 class Group(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(User, related_name='%(class)s_created')
     name = models.CharField(max_length=255)
+    # AutoSlug - https://pypi.python.org/pypi/django-autoslug/1.9.3
+    slug = AutoSlugField(populate_from='name')
     description = models.TextField(default='')
 
     class Meta:
         abstract = True
+
 
 class Family(Group):
     members = models.ManyToManyField(User, related_name='families')
 
     class Meta:
         verbose_name_plural = 'families'
-
 
 
 class Company(Group):

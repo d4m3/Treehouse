@@ -41,7 +41,7 @@ class SignUpView(generic.CreateView):
 # class CompanyCreate(LoginRequiredMixin, generic.CreateView):
 #     form_class = forms.CompanyForm
 #     success_url = reverse_lazy('users:dashboard')
-#     template_name = 'users/company_form.html'
+#     template_name = 'users/form.html'
 #
 #     def form_valid(self, form):
 #         form.instance.created_by = self.request.user

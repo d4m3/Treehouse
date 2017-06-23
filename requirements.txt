@@ -40,3 +40,9 @@ tzlocal==1.4
 virtualenv==15.1.0
 Werkzeug==0.12.2
 WTForms==2.1
+
+
+
+django-bootstrap3
+django-braces
+django-autoslug==1.9.3
