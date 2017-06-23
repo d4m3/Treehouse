@@ -39,7 +39,7 @@
                 <h3>Companies</h3>
                 <div class="list-group">
                     {% for company in user.companies.all %}
-                        <a href="#" class="list-group-item">{{ company.name }}</a>
+                        <a href="{% url 'groups:companies:detail' slug=company.slug %}" class="list-group-item">{{ company.name }}</a>
                     {% endfor %}
                 </div>
             </div>
