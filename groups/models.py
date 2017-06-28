@@ -36,11 +36,10 @@ class Invite(models.Model):
     from_user = models.ForeignKey(User, related_name='%(class)s_created')
     to_user = models.ForeignKey(User, related_name='%(class)s_received')
     accepted = models.BooleanField(default=False)
-    uuid = models.CharField(max_length=32,default='')
+    uuid = models.CharField(max_length=32, default='')
 
     class Meta:
         abstract = True
-
 
     def save(self, *args, **kwargs):
         if not self.pk:
