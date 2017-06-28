@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.views import generic
 
 
@@ -7,7 +7,7 @@ from django.views import generic
 from braces.views import SetHeadlineMixin
 
 from .. import forms
-from ..models import Company
+# from ..models import Company
 
 
 # Create
@@ -27,7 +27,7 @@ class Create(LoginRequiredMixin, SetHeadlineMixin, generic.CreateView):
 # Update
 class Update(LoginRequiredMixin, SetHeadlineMixin, generic.UpdateView):
     form_class = forms.CompanyForm
-    success_url = reverse_lazy('users:dashboard')
+    # success_url = reverse_lazy('users:dashboard')
     template_name = 'companies/form.html'
 
     def get_queryset(self):
@@ -35,6 +35,10 @@ class Update(LoginRequiredMixin, SetHeadlineMixin, generic.UpdateView):
 
     def get_headline(self):
         return f'Edit {self.object.name}'
+
+    # Send user to this page after successfully updating
+    def get_success_url(self):
+        return reverse('groups:companies:detail', kwargs={'slug':self.object.slug})
 
 
 # View Details

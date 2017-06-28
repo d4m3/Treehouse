@@ -10,7 +10,7 @@ class Group(models.Model):
     created_by = models.ForeignKey(User, related_name='%(class)s_created')
     name = models.CharField(max_length=255)
     # AutoSlug - https://pypi.python.org/pypi/django-autoslug/1.9.3
-    slug = AutoSlugField(populate_from='name')
+    slug = AutoSlugField(populate_from='name', unique=True)
     description = models.TextField(default='')
 
     class Meta:
