@@ -73,7 +73,12 @@ class Detail(LoginRequiredMixin, generic.FormView):
         )
         return response
 
+# View for seeing an invitation to a group
+class Invites(LoginRequiredMixin, generic.ListView):
+    template_name = 'companies/invites.html'
 
+    def get_queryset(self):
+        return self.request.user.companyinvite_received.all()
 
 
 

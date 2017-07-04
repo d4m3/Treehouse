@@ -6,6 +6,7 @@ from django.utils import timezone
 from autoslug import AutoSlugField
 
 
+
 class Group(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
     created_by = models.ForeignKey(User, related_name='%(class)s_created')
@@ -16,6 +17,9 @@ class Group(models.Model):
 
     class Meta:
         abstract = True
+
+    def __str__(self):
+        return self.name
 
 
 class Family(Group):
@@ -32,14 +36,25 @@ class Company(Group):
         verbose_name_plural = 'companies'
 
 
+# Status of Invites sent to select from admin console
+INVITE_STATUES = (
+    (0, 'Pending'),
+    (1, 'Accepted'),
+    (2, 'Rejected')
+)
+
 class Invite(models.Model):
     from_user = models.ForeignKey(User, related_name='%(class)s_created')
     to_user = models.ForeignKey(User, related_name='%(class)s_received')
-    accepted = models.BooleanField(default=False)
+    status = models.IntegerField(default=0, choices=INVITE_STATUES)
     uuid = models.CharField(max_length=32, default='')
 
     class Meta:
         abstract = True
+
+    # Display the invitation to group by in admin console
+    def __str__(self):
+        return f'{self.to_user} invited by {self.from_user}'
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -50,8 +65,16 @@ class Invite(models.Model):
 class CompanyInvite(Invite):
     company = models.ForeignKey(Company, related_name='invites')
 
+    # Display the invitation to group by in admin console
+    def __str__(self):
+        return f'{self.to_user} invited to {self.company} by {self.from_user}'
+
 class FamilyInvite(Invite):
     family = models.ForeignKey(Family, related_name='invites')
+
+    # Display the invitation to group by in admin console
+    def __str__(self):
+        return f'{self.to_user} invited to {self.family} by {self.from_user}'
 
 
 
