@@ -1,5 +1,8 @@
 import uuid
 from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
+from django.dispatch import receiver
 from django.db import models
 from django.utils import timezone
 
@@ -75,6 +78,51 @@ class FamilyInvite(Invite):
     # Display the invitation to group by in admin console
     def __str__(self):
         return f'{self.to_user} invited to {self.family} by {self.from_user}'
+
+# 1:14:00 Signals: used to add user to group, wait asec
+@receiver(post_save, sender=CompanyInvite)
+def join_company(sender, instance, created, **kwargs):
+    if not created:
+        if instance.status == 1:
+            instance.company.members.add(instance.to_user)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
