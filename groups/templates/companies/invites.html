@@ -1,3 +1,4 @@
+
 {% extends 'layout.html' %}
 {% load bootstrap3 %}
 
@@ -7,9 +8,16 @@
     <div class="container pt">
         <div class="row">
             <div class="col-md-6">
-                <ul>
+                <ul class="list-group">
                     {% for invite in object_list %}
-                    <li><a href="#">{{ invite.company}} by {{ invite.from_user }}</a></li>
+                    <li class="list-group-item row">
+                        <!-- Add Accept/Reject functions with glyphicon -->
+                        <div class="pull-right">
+                            <a href="{% url 'groups:companies:invite_response' code=invite.uuid response='accept' %}" class="btn btn-success glyphicon glyphicon-ok"></a>
+                            <a href="{% url 'groups:companies:invite_response' code=invite.uuid response='reject' %}" class="btn btn-danger glyphicon glyphicon-remove"></a>
+                        </div>
+                        {{ invite.company}} by {{ invite.from_user }}
+                    </li>
                     {% endfor %}
                 </ul>
             </div>
