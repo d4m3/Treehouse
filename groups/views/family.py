@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy,reverse
 from django.views import generic
@@ -49,6 +50,31 @@ class Detail(LoginRequiredMixin, generic.DetailView):
 
     def get_queryset(self):
         return self.request.user.families.all()
+
+
+# Leave Family
+class Leave(LoginRequiredMixin, SetHeadlineMixin, generic.FormView):
+    form_class = forms.LeaveForm
+    template_name = 'families/form.html'
+    success_url = reverse_lazy('users:dashboard')
+
+    def get_object(self):
+        try:
+            self.object = self.request.user.families.filter(
+            slug=self.kwargs.get('slug'),
+            ).exclude(created_by=self.request.user).get()
+        except models.Family.DoesNotExist:
+            raise Http404()
+
+    def get_headline(self):
+        self.get_object()
+        return f'Leave {self.object}?'
+
+    def form_valid(self, form):
+        self.get_object()
+        self.object.members.remove(self.request.user)
+        return super().form_valid(form)
+
 
 
 # View for seeing an invitation to a group

@@ -17,7 +17,6 @@ class FamilyForm(forms.ModelForm):
         model = models.Family
 
 
-
 class CompanyInviteForm(forms.Form):
     email_or_username = forms.CharField(label='Email/Username')
 
@@ -34,3 +33,5 @@ class CompanyInviteForm(forms.Form):
         return data
 
 
+class LeaveForm(forms.Form):
+    pass
