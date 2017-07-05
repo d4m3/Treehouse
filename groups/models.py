@@ -86,6 +86,11 @@ def join_company(sender, instance, created, **kwargs):
         if instance.status == 1:
             instance.company.members.add(instance.to_user)
 
+@receiver(post_save, sender=FamilyInvite)
+def join_company(sender, instance, created, **kwargs):
+    if not created:
+        if instance.status == 1:
+            instance.family.members.add(instance.to_user)
 
 
 
