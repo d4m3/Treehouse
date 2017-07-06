@@ -131,3 +131,42 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'assets'),]
 # Authentication
 LOGIN_URL = 'users:login'
 LOGIN_REDIRECT_URL = 'users:dashboard'
+
+# Send email using File backend (look at the file that would get send)@ 1:59:00
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
+EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'emails') # Setup email in directory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
