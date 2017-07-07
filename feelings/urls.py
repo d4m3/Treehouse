@@ -26,6 +26,7 @@ from groups import urls as group_urls
 from users.serializers import router as user_router
 from thoughts import routers as thought_routers
 
+from rest_framework_jwt.views import obtain_jwt_token
 
 
 api_urlpatterns = [
@@ -41,8 +42,8 @@ urlpatterns = [
     url(r'^groups/', include(group_urls, namespace='groups')),
     url(r'^$', TemplateView.as_view(template_name='index.html'), name='home'),
     url(r'^api/', include(api_urlpatterns)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', obtain_jwt_token),
 ]
 
 # Django Debug Toolbar
