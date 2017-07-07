@@ -7,5 +7,14 @@ class ThoughtSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = models.Thought
         fields = ('recorded_at', 'condition', 'notes')
+        read_only_fields = ('recorded_at',)
+
+    def create(self, validated_data):
+        import pdb
+        pdb.set_trace()
+        thought = models.Thought(**validated_data)
+        thought.user = self.context['request'].user
+        thought.save()
+        return thought
 
 
